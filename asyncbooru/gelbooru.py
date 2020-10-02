@@ -52,7 +52,7 @@ class Gelbooru:
                   "q": "index",
                   "json": 1,
                   "limit": limit,
-                  "tags": f"{self.get_rating(rating)} {tags}".strip()}
+                  "tags": f"{self._get_rating(rating)} {tags}".strip()}
 
         logger.debug("Handling request for tags: %s", params.get('tags'))
 
@@ -63,6 +63,6 @@ class Gelbooru:
             raise Exception
 
     @staticmethod
-    def get_rating(rating: str) -> str:
+    def _get_rating(rating: str) -> str:
         rating_res = [v for k, v in ratings.items() if rating.lower() in k]
         return rating_res[0] if rating_res else ""
