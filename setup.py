@@ -1,0 +1,22 @@
+import setuptools
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
+    name="asyncbooru-nick80835", # Replace with your own username
+    version="0.0.1",
+    author="Nick80835",
+    author_email="nick80835@gmail.com",
+    description="An async library for interfacing with Danbooru, Gelbooru and Sankaku Complex.",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/Nick80835/asyncbooru",
+    packages=setuptools.find_packages(),
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "Operating System :: OS Independent",
+    ],
+    python_requires='>=3.6',
+)
