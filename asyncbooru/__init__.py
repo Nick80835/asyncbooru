@@ -1,1 +1,1 @@
-from .gelbooru import Gelbooru
+from .gelbooru import Gelbooru, GelbooruPost

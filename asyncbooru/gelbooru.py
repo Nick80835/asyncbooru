@@ -5,6 +5,7 @@ from aiohttp import ClientSession
 
 class GelbooruPost:
     def __init__(self, json: dict):
+        self.json = json
         self.id: int = json.get("id")
         self.file_url: str = json.get("file_url")
         self.rating: str = json.get("rating")
@@ -26,12 +27,12 @@ class Gelbooru:
         self.client = client
 
     async def get_random_post(self, tags: str = "") -> GelbooruPost:
-        return GelbooruPost((await self.raw_request(f"sort:random {tags}", 1))[0])
+        return GelbooruPost((await self.json_request(f"sort:random {tags}", 1))[0])
 
     async def get_random_post_list(self, tags: str = "", limit: int = 30) -> List[GelbooruPost]:
-        return [GelbooruPost(json) for json in await self.raw_request(f"sort:random {tags}", limit)]
+        return [GelbooruPost(json) for json in await self.json_request(f"sort:random {tags}", limit)]
 
-    async def raw_request(self, tags: str = "", limit: int = 30) -> dict:
+    async def json_request(self, tags: str = "", limit: int = 30) -> dict:
         params = {"page": "dapi",
                   "s": "post",
                   "q": "index",
