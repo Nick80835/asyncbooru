@@ -37,8 +37,14 @@ class Gelbooru:
     async def get_random_post(self, tags: str = "", rating: str = "") -> GelbooruPost:
         return GelbooruPost((await self.json_request(f"sort:random {tags}", 1, rating))[0])
 
-    async def get_random_post_list(self, tags: str = "", limit: int = 30, rating: str = "") -> List[GelbooruPost]:
+    async def get_random_posts(self, tags: str = "", limit: int = 30, rating: str = "") -> List[GelbooruPost]:
         return [GelbooruPost(json) for json in await self.json_request(f"sort:random {tags}", limit, rating)]
+
+    async def get_latest_post(self, tags: str = "", rating: str = "") -> GelbooruPost:
+        return GelbooruPost((await self.json_request(f"{tags}", 1, rating))[0])
+
+    async def get_latest_posts(self, tags: str = "", limit: int = 30, rating: str = "") -> List[GelbooruPost]:
+        return [GelbooruPost(json) for json in await self.json_request(tags, limit, rating)]
 
     async def json_request(self, tags: str = "", limit: int = 30, rating: str = "") -> dict:
         params = {"page": "dapi",
