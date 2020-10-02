@@ -36,8 +36,8 @@ class DanbooruPost:
 
 
 class Danbooru:
-    def __init__(self, client=ClientSession()):
-        self.client = client
+    def __init__(self, client: ClientSession):
+        self.client = client or ClientSession()
 
     async def get_random_post(self, tags: str = "", rating: str = "") -> DanbooruPost:
         return DanbooruPost((await self.json_request(f"{tags}", 1, rating, True))[0])
