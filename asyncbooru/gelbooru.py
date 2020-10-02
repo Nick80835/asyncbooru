@@ -5,6 +5,7 @@ from aiohttp import ClientSession
 
 logger = getLogger(__name__)
 api_url = "https://gelbooru.com/index.php"
+sauce_base = "https://gelbooru.com/index.php?page=post&s=view&id="
 
 ratings = {
     ("safe", "s"): "Rating:safe",
@@ -28,6 +29,7 @@ class GelbooruPost:
         self.owner: str = json.get("owner")
         self.created_at: str = json.get("created_at")
         self.parent_id: int = json.get("parent_id")
+        self.sauce: str = sauce_base + str(self.id)
 
 
 class Gelbooru:
