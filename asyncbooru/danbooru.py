@@ -40,13 +40,13 @@ class Danbooru:
         self.client = client or ClientSession()
 
     async def get_random_post(self, tags: str = "", rating: str = "") -> DanbooruPost:
-        return DanbooruPost((await self.json_request(f"{tags}", 1, rating, True))[0])
+        return DanbooruPost((await self.json_request(tags, 1, rating, True))[0])
 
     async def get_random_posts(self, tags: str = "", limit: int = 30, rating: str = "") -> List[DanbooruPost]:
-        return [DanbooruPost(json) for json in await self.json_request(f"{tags}", limit, rating, True)]
+        return [DanbooruPost(json) for json in await self.json_request(tags, limit, rating, True)]
 
     async def get_latest_post(self, tags: str = "", rating: str = "") -> DanbooruPost:
-        return DanbooruPost((await self.json_request(f"{tags}", 1, rating))[0])
+        return DanbooruPost((await self.json_request(tags, 1, rating))[0])
 
     async def get_latest_posts(self, tags: str = "", limit: int = 30, rating: str = "") -> List[DanbooruPost]:
         return [DanbooruPost(json) for json in await self.json_request(tags, limit, rating)]
