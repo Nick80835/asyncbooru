@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="asyncbooru-nick80835", # Replace with your own username
+    name="asyncbooru-nick80835",
     version="0.0.1",
     author="Nick80835",
     author_email="nick80835@gmail.com",
@@ -18,5 +18,6 @@ setuptools.setup(
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',
+    install_requires=["aiohttp"],
+    python_requires='>=3.6'
 )
