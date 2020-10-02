@@ -1,6 +1,16 @@
+from logging import getLogger
 from typing import List
 
 from aiohttp import ClientSession
+
+logger = getLogger(__name__)
+api_url = "https://gelbooru.com/index.php"
+
+ratings = {
+    ("safe", "s"): "Rating:safe",
+    ("questionable", "q"): "Rating:questionable",
+    ("explicit", "e", "x"): "Rating:explicit"
+}
 
 
 class GelbooruPost:
@@ -21,27 +31,32 @@ class GelbooruPost:
 
 
 class Gelbooru:
-    api_url = "https://gelbooru.com/index.php"
-
     def __init__(self, client=ClientSession()):
         self.client = client
 
-    async def get_random_post(self, tags: str = "") -> GelbooruPost:
-        return GelbooruPost((await self.json_request(f"sort:random {tags}", 1))[0])
+    async def get_random_post(self, tags: str = "", rating: str = "") -> GelbooruPost:
+        return GelbooruPost((await self.json_request(f"sort:random {tags}", 1, rating))[0])
 
-    async def get_random_post_list(self, tags: str = "", limit: int = 30) -> List[GelbooruPost]:
-        return [GelbooruPost(json) for json in await self.json_request(f"sort:random {tags}", limit)]
+    async def get_random_post_list(self, tags: str = "", limit: int = 30, rating: str = "") -> List[GelbooruPost]:
+        return [GelbooruPost(json) for json in await self.json_request(f"sort:random {tags}", limit, rating)]
 
-    async def json_request(self, tags: str = "", limit: int = 30) -> dict:
+    async def json_request(self, tags: str = "", limit: int = 30, rating: str = "") -> dict:
         params = {"page": "dapi",
                   "s": "post",
                   "q": "index",
                   "json": 1,
                   "limit": limit,
-                  "tags": tags.strip()}
+                  "tags": f"{self.get_rating(rating)} {tags}".strip()}
 
-        async with self.client.get(self.api_url, params=params) as response:
+        logger.debug("Handling request for tags: %s", params.get('tags'))
+
+        async with self.client.get(api_url, params=params) as response:
             if response.status == 200:
                 return await response.json()
 
             raise Exception
+
+    @staticmethod
+    def get_rating(rating: str) -> str:
+        rating_res = [v for k, v in ratings.items() if rating.lower() in k]
+        return rating_res[0] if rating_res else ""
