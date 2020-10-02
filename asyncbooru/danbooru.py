@@ -38,7 +38,7 @@ class DanbooruPost:
 
 
 class Danbooru:
-    def __init__(self, client: ClientSession):
+    def __init__(self, client: ClientSession = None):
         self.client = client or ClientSession()
 
     async def get_random_post(self, tags: str = "", rating: str = "") -> DanbooruPost:
