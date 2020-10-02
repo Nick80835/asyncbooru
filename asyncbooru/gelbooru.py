@@ -3,6 +3,8 @@ from typing import List
 
 from aiohttp import ClientSession
 
+from .exceptions import ApiException
+
 logger = getLogger(__name__)
 api_url = "https://gelbooru.com/index.php"
 sauce_base = "https://gelbooru.com/index.php?page=post&s=view&id="
@@ -62,7 +64,7 @@ class Gelbooru:
             if response.status == 200:
                 return await response.json()
 
-            raise Exception
+            raise ApiException(f"Expected status 200, got {response.status}")
 
     @staticmethod
     def _get_rating(rating: str) -> str:
