@@ -1,6 +1,6 @@
 from logging import getLogger
 from typing import List
-from pprint import pprint
+
 from aiohttp import ClientSession
 
 logger = getLogger(__name__)
