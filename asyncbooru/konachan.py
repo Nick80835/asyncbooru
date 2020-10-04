@@ -44,14 +44,16 @@ class Konachan:
         return KonachanPost(post_json[0]) if post_json else None
 
     async def get_random_posts(self, tags: str = "", limit: int = 30, rating: str = "") -> List[KonachanPost]:
-        return [KonachanPost(json) for json in await self.json_request(f"order:random {tags}", limit, rating)]
+        post_json = await self.json_request(f"order:random {tags}", limit, rating)
+        return [KonachanPost(json) for json in post_json] if post_json else None
 
     async def get_latest_post(self, tags: str = "", rating: str = "") -> KonachanPost:
         post_json = await self.json_request(tags, 1, rating)
         return KonachanPost(post_json[0]) if post_json else None
 
     async def get_latest_posts(self, tags: str = "", limit: int = 30, rating: str = "") -> List[KonachanPost]:
-        return [KonachanPost(json) for json in await self.json_request(tags, limit, rating)]
+        post_json = await self.json_request(tags, limit, rating)
+        return [KonachanPost(json) for json in post_json] if post_json else None
 
     async def json_request(self, tags: str = "", limit: int = 30, rating: str = "") -> dict:
         params = {"limit": limit,
