@@ -55,7 +55,7 @@ class Konachan:
         post_json = await self.json_request(tags, limit, rating)
         return [KonachanPost(json) for json in post_json] if post_json else None
 
-    async def json_request(self, tags: str = "", limit: int = 30, rating: str = "") -> dict:
+    async def json_request(self, tags: str = "", limit: int = 30, rating: str = "") -> List[dict]:
         params = {"limit": limit,
                   "tags": f"{self._get_rating(rating)} {tags}".strip()}
 

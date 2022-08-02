@@ -54,7 +54,7 @@ class Gelbooru:
         post_json = await self.json_request(tags, limit, rating)
         return [GelbooruPost(json) for json in post_json] if post_json else None
 
-    async def json_request(self, tags: str = "", limit: int = 30, rating: str = "") -> dict:
+    async def json_request(self, tags: str = "", limit: int = 30, rating: str = "") -> List[dict]:
         params = {"page": "dapi",
                   "s": "post",
                   "q": "index",
@@ -66,7 +66,7 @@ class Gelbooru:
 
         async with self.client.get(api_url, params=params) as response:
             if response.status == 200:
-                return await response.json()
+                return (await response.json()).get("post")
 
             raise ApiException(f"Expected status 200, got {response.status}")
 
