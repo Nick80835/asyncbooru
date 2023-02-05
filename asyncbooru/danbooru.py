@@ -28,7 +28,7 @@ class DanbooruPost:
         self.image_height: int = json.get("image_height")
         self.image_width: int = json.get("image_width")
         self.md5: str = json.get("md5")
-        self.tag_string: str = json.get("tag_string")
+        self.tags: str = json.get("tag_string")
         self.score: int = json.get("score")
         self.source: str = json.get("source")
         self.uploader_id: int = json.get("uploader_id")
