@@ -10,7 +10,7 @@ api_url = "https://gelbooru.com/index.php"
 sauce_base = "https://gelbooru.com/index.php?page=post&s=view&id="
 
 ratings = {
-    ("safe", "s"): "Rating:safe",
+    ("safe", "s", "general"): "Rating:general",
     ("questionable", "q"): "Rating:questionable",
     ("explicit", "e", "x"): "Rating:explicit"
 }
