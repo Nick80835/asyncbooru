@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="asyncbooru",
-    version="0.0.7",
+    version="0.0.8",
     author="Nick80835",
     author_email="nick80835@gmail.com",
     description="An async library for interfacing with Danbooru and similar websites.",
