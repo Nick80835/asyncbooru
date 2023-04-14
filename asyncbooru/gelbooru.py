@@ -44,7 +44,7 @@ class Gelbooru:
 
     async def get_random_posts(self, tags: str = "", limit: int = 30, rating: str = "") -> List[GelbooruPost]:
         post_json = await self.json_request(f"sort:random {tags}", limit, rating)
-        return [GelbooruPost(json) for json in post_json] if post_json else None
+        return [GelbooruPost(post_json)] if post_json else None
 
     async def get_latest_post(self, tags: str = "", rating: str = "") -> GelbooruPost:
         post_json = await self.json_request(tags, 1, rating)
