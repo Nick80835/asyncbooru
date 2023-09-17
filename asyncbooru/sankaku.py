@@ -6,13 +6,13 @@ from aiohttp import ClientSession
 from .exceptions import ApiException
 
 logger = getLogger(__name__)
-api_url = "https://capi-v2.sankakucomplex.com/posts"
+api_url = "https://capi-v2.sankakucomplex.com/posts/keyset"
 sauce_base = "https://beta.sankakucomplex.com/post/show/"
 
 ratings = {
-    ("safe", "s"): "rating:safe",
-    ("questionable", "q"): "rating:questionable",
-    ("explicit", "e", "x"): "rating:explicit"
+    ("safe", "s"): "s",
+    ("questionable", "q"): "q",
+    ("explicit", "e", "x"): "e"
 }
 
 
@@ -59,13 +59,13 @@ class Sankaku:
     async def json_request(self, tags: str = "", limit: int = 30, rating: str = "") -> List[dict]:
         params = {"limit": limit,
                   "page": 1,
-                  "tags": f"{self._get_rating(rating)} {tags}".strip()}
+                  "tags": f"{'rating:' + self._get_rating(rating) if rating else ''} {tags}".strip()}
 
         logger.debug("Handling request for tags: %s", params.get('tags'))
 
         async with self.client.get(api_url, params=params) as response:
             if response.status == 200:
-                return await response.json()
+                return (await response.json()).get("data")
 
             raise ApiException(f"Expected status 200, got {response.status}")
 

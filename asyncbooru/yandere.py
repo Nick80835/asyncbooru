@@ -10,9 +10,9 @@ api_url = "https://yande.re/post.json"
 sauce_base = "https://yande.re/post/show/"
 
 ratings = {
-    ("safe", "s"): "rating:safe",
-    ("questionable", "q"): "rating:questionable",
-    ("explicit", "e", "x"): "rating:explicit"
+    ("safe", "s"): "s",
+    ("questionable", "q"): "q",
+    ("explicit", "e", "x"): "e"
 }
 
 
@@ -59,7 +59,7 @@ class Yandere:
     async def json_request(self, tags: str = "", limit: int = 30, rating: str = "") -> List[dict]:
         params = {"limit": limit,
                   "page": 1,
-                  "tags": f"{self._get_rating(rating)} {tags}".strip()}
+                  "tags": f"{'rating:' + self._get_rating(rating) if rating else ''} {tags}".strip()}
 
         logger.debug("Handling request for tags: %s", params.get('tags'))
 

@@ -10,9 +10,9 @@ api_url = "http://danbooru.donmai.us/posts.json"
 sauce_base = "https://danbooru.donmai.us/posts/"
 
 ratings = {
-    ("safe", "s"): "Rating:safe",
-    ("questionable", "q"): "Rating:questionable",
-    ("explicit", "e", "x"): "Rating:explicit"
+    ("safe", "s"): "s",
+    ("questionable", "q"): "q",
+    ("explicit", "e", "x"): "e"
 }
 
 
@@ -60,7 +60,7 @@ class Danbooru:
     async def json_request(self, tags: str = "", limit: int = 30, rating: str = "", random: bool = False) -> List[dict]:
         params = {"limit": limit,
                   "random": str(random),
-                  "tags": f"{self._get_rating(rating)} {tags}".strip()}
+                  "tags": f"{'rating:' + self._get_rating(rating) if rating else ''} {tags}".strip()}
 
         logger.debug("Handling request for tags: %s", params.get('tags'))
 

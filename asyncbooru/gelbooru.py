@@ -10,9 +10,9 @@ api_url = "https://gelbooru.com/index.php"
 sauce_base = "https://gelbooru.com/index.php?page=post&s=view&id="
 
 ratings = {
-    ("safe", "s", "general"): "Rating:general",
-    ("questionable", "q"): "Rating:questionable",
-    ("explicit", "e", "x"): "Rating:explicit"
+    ("safe", "s", "general"): "general",
+    ("questionable", "q"): "questionable",
+    ("explicit", "e", "x"): "explicit"
 }
 
 
@@ -60,7 +60,7 @@ class Gelbooru:
                   "q": "index",
                   "json": 1,
                   "limit": limit,
-                  "tags": f"{self._get_rating(rating)} {tags}".strip()}
+                  "tags": f"{'rating:' + self._get_rating(rating) if rating else ''} {tags}".strip()}
 
         logger.debug("Handling request for tags: %s", params.get('tags'))
 

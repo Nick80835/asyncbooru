@@ -10,9 +10,9 @@ api_url = "https://konachan.com/post.json"
 sauce_base = "https://konachan.com/post/show/"
 
 ratings = {
-    ("safe", "s"): "rating:s",
-    ("questionable", "q"): "rating:q",
-    ("explicit", "e", "x"): "rating:x"
+    ("safe", "s"): "s",
+    ("questionable", "q"): "q",
+    ("explicit", "e", "x"): "e"
 }
 
 
@@ -57,7 +57,7 @@ class Konachan:
 
     async def json_request(self, tags: str = "", limit: int = 30, rating: str = "") -> List[dict]:
         params = {"limit": limit,
-                  "tags": f"{self._get_rating(rating)} {tags}".strip()}
+                  "tags": f"{'rating:' + self._get_rating(rating) if rating else ''} {tags}".strip()}
 
         logger.debug("Handling request for tags: %s", params.get('tags'))
 
